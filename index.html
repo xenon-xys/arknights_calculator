@@ -759,6 +759,7 @@
                         <div style="display: flex; gap: 4px; margin-top: 4px; justify-content: center; width: 100%;">
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setEndDate('2026-08-01')">2026夏活开始</button>
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setEndDate('2026-08-14')">2026夏活结束</button>
+                            <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setEndDate('2026-09-01')">26年9月1日</button>
                         </div>
                     </div>
                 </div>
@@ -1137,6 +1138,20 @@
                 ]
             },
             {
+                id: 'event-newsletter-67',
+                name: '通讯67期',
+                type: 'uncertain',
+                frequency: 'oneTime',
+                enabled: true,
+                startDate: '2026-07-18',
+                endDate: '2026-07-24',
+                resources: [
+                    { resourceType: 'syntheticJade', minAmount: 200, avgAmount: 200, maxAmount: 200 },
+                    { resourceType: 'pureOriginite', minAmount: 0, avgAmount: 0, maxAmount: 0 },
+                    { resourceType: 'recruitmentVoucher', minAmount: 0, avgAmount: 0, maxAmount: 0 }
+                ]
+            },
+            {
                 id: 'event-summer-main',
                 name: '夏活ss',
                 type: 'stable',
@@ -1414,15 +1429,15 @@
             const startDay = startDate.getDay();
             const endDay = endDate.getDay();
             
-            const startWeekSunday = new Date(startDate);
-            startWeekSunday.setDate(startDate.getDate() - startDay);
+            const startWeekMonday = new Date(startDate);
+            startWeekMonday.setDate(startDate.getDate() - (startDay === 0 ? 6 : startDay - 1));
             
-            const endWeekSaturday = new Date(endDate);
-            endWeekSaturday.setDate(endDate.getDate() + (6 - endDay));
+            const endWeekSunday = new Date(endDate);
+            endWeekSunday.setDate(endDate.getDate() + (endDay === 0 ? 0 : 7 - endDay));
             
-            if (endWeekSaturday < startWeekSunday) return 0;
+            if (endWeekSunday < startWeekMonday) return 0;
             
-            const diffTime = endWeekSaturday - startWeekSunday;
+            const diffTime = endWeekSunday - startWeekMonday;
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             
             return Math.floor(diffDays / 7) + 1;
