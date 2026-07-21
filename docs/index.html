@@ -1286,6 +1286,9 @@
             const mode = document.querySelector('input[name="startMode"]:checked').value;
             const startDateShortcut = document.getElementById('startDateShortcut');
             if (mode === 'current') {
+                const now = new Date();
+                const gameDate = convertToGameDate(now);
+                startDateInput.value = gameDate.toISOString().split('T')[0];
                 startDateInput.disabled = true;
                 startDateInput.style.opacity = '0.5';
                 startDateLabel.textContent = '开始日期（当前时间）';
