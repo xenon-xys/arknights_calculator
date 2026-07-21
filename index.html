@@ -752,6 +752,9 @@
                     <div class="form-group">
                         <label id="startDateLabel">开始日期</label>
                         <input type="date" id="startDate" required>
+                        <div style="display: flex; gap: 4px; margin-top: 4px; justify-content: center; width: 100%;">
+                            <button class="btn btn-secondary" id="startDateShortcut" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setStartDate('2026-01-01')">26年1月1日</button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>结束日期</label>
@@ -915,6 +918,7 @@
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setCurrentValue('currentVoucher', 20)">20</button>
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setCurrentValue('currentVoucher', 38)">38</button>
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setCurrentValue('currentVoucher', 50)">50</button>
+                            <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setCurrentValue('currentVoucher', 76)">76</button>
                             <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 0.65rem;" onclick="setCurrentValue('currentVoucher', 100)">100</button>
                         </div>
                     </div>
@@ -1280,15 +1284,20 @@
 
         function toggleStartMode() {
             const mode = document.querySelector('input[name="startMode"]:checked').value;
+            const startDateShortcut = document.getElementById('startDateShortcut');
             if (mode === 'current') {
                 startDateInput.disabled = true;
                 startDateInput.style.opacity = '0.5';
                 startDateLabel.textContent = '开始日期（当前时间）';
+                startDateShortcut.disabled = true;
+                startDateShortcut.style.opacity = '0.5';
                 updateDateDiff();
             } else {
                 startDateInput.disabled = false;
                 startDateInput.style.opacity = '1';
                 startDateLabel.textContent = '开始日期';
+                startDateShortcut.disabled = false;
+                startDateShortcut.style.opacity = '1';
             }
         }
 
@@ -1355,6 +1364,11 @@
 
         function setEndDate(date) {
             endDateInput.value = date;
+            updateDateDiff();
+        }
+
+        function setStartDate(date) {
+            startDateInput.value = date;
             updateDateDiff();
         }
 
